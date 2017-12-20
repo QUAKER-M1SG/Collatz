@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Collatz</title>
+</head>
+<body>
+	<input type="text" name="" id="collatz_input">
+	<button id="collatz_button">collatz</button>
+	<p id="collatz_size" style="color:#f00;"></p>
+	<ul id="collatz_out">
+		
+	</ul>
+	<table id="collatz_table" style="position:absolute;left:300px;top:7px;">
+		<tr>
+			<th>数字</th>
+			<th>规模</th>
+		</tr>
+	</table>
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		function collatz(number){
+		    if(number % 2 == 0){
+		        number = number / 2;
+		    }else if(number % 2 == 1){
+		        number = number * 3 + 1;
+		    }
+		    $('#collatz_out').append('<li>'+number+'</li>');
+		    if(number == 1){
+		        return number;
+		    }
+		    collatz(number);    
+		}
+		$('#collatz_button').click(function(){
+			if(!isNaN($('#collatz_input').val()) && $('#collatz_input').val() != 0){
+				$('#collatz_out').empty();
+			    collatz($('#collatz_input').val());
+			    $('#collatz_size').text($('#collatz_out li').length);
+			    $('#collatz_table').append('<tr><td style="color:#12f">'+$('#collatz_input').val()+'</td><td style="color:#f0f">'+$('#collatz_out li').length+'</td><tr>');
+			    $('#collatz_input').val('').focus();
+			}
+		});
+		$(document).keydown(function(event){
+			if(event.keyCode == 13){
+				if(!isNaN($('#collatz_input').val()) && $('#collatz_input').val() != 0){
+					$('#collatz_out').empty();
+				    collatz($('#collatz_input').val());
+				    $('#collatz_size').text($('#collatz_out li').length);
+				    $('#collatz_table').append('<tr><td style="color:#12f">'+$('#collatz_input').val()+'</td><td style="color:#f0f">'+$('#collatz_out li').length+'</td><tr>');
+				    $('#collatz_input').val('').focus();
+				}
+			}
+		});
+	</script>
+</body>
+</html>
